@@ -1,0 +1,34 @@
+{
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": ["Hi", "Hey", "Hello", "What's up?", "Yo"],
+        "responses": ["Hey there!", "Hello!", "Hi!", "How can I help you?"]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": ["Bye", "See you", "Goodbye", "Catch you later"],
+        "responses": ["See you!", "Bye!", "Take care!", "Catch you later!"]
+      },
+      {
+        "tag": "name_query",
+        "patterns": ["What is my name?", "Do you know my name?", "Who am I?"],
+        "responses": ["Your name is {name}."]
+      },
+      {
+        "tag": "bot_name",
+        "patterns": ["What is your name?", "Who are you?", "Tell me your name"],
+        "responses": ["I'm your friendly AI bot!", "You can call me ChatBro."]
+      },
+      {
+        "tag": "memory_set",
+        "patterns": ["My name is *", "Call me *", "Remember my name is *"],
+        "responses": ["Got it! I'll remember your name as {name}."]
+      },
+      {
+        "tag": "fallback",
+        "patterns": [],
+        "responses": ["I'm not sure about that. Let me check...", "Hmm, I don't know yet."]
+      }
+    ]
+  }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dina AI - Virtual Assistant by Dineth</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chatContainer">
+        <div class="header">
+            <img src="/static/dinaAi.jpeg" class="avatar" alt="Dina AI">
+            <h1>Dina AI</h1>
+            <p class="subtitle">Virtual Assistant by Dineth</p>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask me anything...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById("user-input");
+            const msg = input.value;
+            if (!msg.trim()) return;
+
+            appendMessage("You", msg);
+            input.value = "";
+
+            // Add typing animation
+            const typingId = appendTyping();
+
+            try {
+                const res = await fetch("/get", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg })
+                });
+
+                const data = await res.json();
+
+                // Remove typing
+                removeTyping(typingId);
+
+                // Show actual reply
+                appendMessage("Dina AI", data.reply);
+            } catch (e) {
+                removeTyping(typingId);
+                appendMessage("Dina AI", "Oops! Something went wrong.");
+            }
+        }
+
+        function appendMessage(sender, text) {
+            const chatBox = document.getElementById("chat-box");
+            const msgDiv = document.createElement("div");
+            msgDiv.className = sender === "You" ? "message right" : "message left";
+            msgDiv.innerHTML = `
+                <div class="bubble">
+                    ${sender !== "You" ? '<img src="/static/dinaAi.jpeg" class="chat-avatar" alt="avatar">' : ''}
+                    <div><strong>${sender}:</strong> ${text}</div>
+                </div>`;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function appendTyping() {
+            const chatBox = document.getElementById("chat-box");
+            const typingDiv = document.createElement("div");
+            typingDiv.className = "message left typing";
+            typingDiv.id = "typing-" + Date.now();
+
+            typingDiv.innerHTML = `
+                <div class="bubble">
+                    <img src="/static/dinaAi.jpeg" class="chat-avatar" alt="avatar">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                </div>
+            `;
+            chatBox.appendChild(typingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return typingDiv.id;
+        }
+
+        function removeTyping(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+    </script>
+</body>
+</html>
