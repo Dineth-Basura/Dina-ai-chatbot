@@ -40,7 +40,7 @@ python app.py
 Visit: http://127.0.0.1:5050/ in your browser.
 
 Folder Structure
-
+```bash
 Dina-ai-chatbot/
 ├── app.py
 ├── train_bot.py
@@ -57,6 +57,8 @@ Dina-ai-chatbot/
 │   └── deepseek_api.py
 └── images/
     └── dina-chat-ui.png   ← your screenshots here!
+```
+
 
 Preview
 
